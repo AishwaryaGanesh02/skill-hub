@@ -11,7 +11,8 @@ app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: false }));
 
 app.use("/api/user", require("./routes/user"));
-// app.use("/api/attendance", require("./routes/attendance"));
+app.use("/api/skill", require("./routes/skills"));
+// app.use("/api/userskill", require("./routes/manageUserSkills"));
 
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
