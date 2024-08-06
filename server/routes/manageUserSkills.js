@@ -1,17 +1,17 @@
 const router = require("express").Router();
 
 const {
-  addSkill,
-  deleteSkill,
-  readAllSkills,
-  updateSkill,
-  readDesgSkills,
-} = require("../controller/skillController");
+  addUserSkill,
+  deleteUserSkill,
+  readAllUserSkill,
+  updateUserSkill,
+  readOneUserSkill,
+} = require("../controller/manageUserSkillsContoller");
 
-// Add new skill
+// Add new user_skill
 /*
-Route           /api/skill/add
-Description     Add new skill
+Route           /api/userskill/add
+Description     Add new user skill
 Access          Public
 Parameter       NONE
 Methods         POST
@@ -19,9 +19,8 @@ Methods         POST
 router.post("/add", async (req, res) => {
   try {
     const info = req.body;
-
-    await addSkill(info);
-    res.status(201).json({ message: "Skill added successfully" });
+    await addUserSkill(info);
+    res.status(201).json({ message: "User Skill added successfully" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -29,7 +28,7 @@ router.post("/add", async (req, res) => {
 
 // Delete skill
 /*
-Route           /api/skill/delete
+Route           /api/userskill/delete
 Description     Delete skill
 Access          Public
 Parameter       id
@@ -47,7 +46,7 @@ router.delete("/delete/:id", async (req, res) => {
 
 // Get all skills
 /*
-Route           /api/skill/
+Route           /api/userskill/
 Description     Get all skills
 Access          Public
 Parameter       NONE
@@ -62,19 +61,19 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Get skills of a designation
+// Get skills of a user
 /*
-Route           /api/skill/
-Description     Get all skills of a designation
+Route           /api/userskill/
+Description     Get all skills of a user
 Access          Public
-Parameter       id
+Parameter       userid
 Methods         GET
 */
-router.get("/:degnid", async (req, res) => {
+router.get("/:userid", async (req, res) => {
   try {
-    const { degnid } = req.params;
-    const desgSkills = await readDesgSkills(degnid);
-    res.json(desgSkills);
+    const { userid } = req.params;
+    const userSkills = await readOneUserSkill(userid);
+    res.json(userSkills);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -82,7 +81,7 @@ router.get("/:degnid", async (req, res) => {
 
 // Update skill
 /*
-Route           /api/skill/edit
+Route           /api/userskill/edit
 Description     Update skill
 Access          Public
 Parameter       id
