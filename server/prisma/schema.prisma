@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Department {
+  id           Int           @id @default(autoincrement())
+  name         String
+  Designations Designation[]
+}
+
+model User {
+  id         Int         @id @default(autoincrement())
+  name       String      @db.VarChar(255)
+  email      String      @unique
+  role       String      @db.VarChar(255)
+  desg       Designation @relation(fields: [degnid], references: [id])
+  degnid     Int
+  UserSkills UserSkill[]
+}
+
+model Designation {
+  id     Int        @id @default(autoincrement())
+  name   String     @unique
+  dept   Department @relation(fields: [deptid], references: [id])
+  deptid Int
+  Users  User[]
+  Skills Skill[]
+}
+
+model Skill {
+  id         Int         @id @default(autoincrement())
+  desg       Designation @relation(fields: [degnid], references: [id])
+  degnid     Int
+  name       String      @db.VarChar(255)
+  UserSkills UserSkill[]
+  desc       String?
+}
+
+model UserSkill {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userid], references: [id])
+  userid    Int
+  skill     Skill    @relation(fields: [skillid], references: [id])
+  skillid   Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// npx prisma migrate dev --name init

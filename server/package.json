@@ -11,5 +11,12 @@
   "description": "",
   "devDependencies": {
     "prisma": "^5.17.0"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.17.0",
+    "nodemon": "^3.1.4"
   }
 }
