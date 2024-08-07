@@ -21,6 +21,7 @@ model User {
   degn       Designation @relation(fields: [degnid], references: [id])
   degnid     Int
   UserSkills UserSkill[]
+  password   String      @db.VarChar(255)
 }
 
 model Designation {

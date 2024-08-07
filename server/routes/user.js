@@ -17,8 +17,11 @@ Methods         POST
 router.post("/add", async (req, res) => {
   try {
     const info = req.body;
-    await addUser(info);
-    res.status(201).json({ message: "User added successfully" });
+
+    const result = await addUser(info);
+    if (result.success) {
+      res.status(201).json({ message: "User added successfully" });
+    }
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
