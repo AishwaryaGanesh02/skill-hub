@@ -5,9 +5,9 @@ const addUserSkill = async (info) => {
   try {
     await prisma.userSkill.create({
       data: {
-        userid: info.userid,
-        skillid: info.skillid,
-        level: info.level,
+        userid: Number(info.userid),
+        skillid: Number(info.skillid),
+        level: Number(info.level),
       },
     });
     return { success: true };
@@ -71,6 +71,7 @@ const readOneUserSkill = async (id) => {
     throw new Error("Error fetching userSkills: " + error.message);
   }
 };
+
 module.exports = {
   addUserSkill,
   deleteUserSkill,

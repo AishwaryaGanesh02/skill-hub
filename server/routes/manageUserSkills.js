@@ -19,6 +19,7 @@ Methods         POST
 router.post("/add", async (req, res) => {
   try {
     const info = req.body;
+    console.log("----s");
     await addUserSkill(info);
     res.status(201).json({ message: "User Skill added successfully" });
   } catch (error) {

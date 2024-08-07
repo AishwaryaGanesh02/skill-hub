@@ -1,22 +1,53 @@
-import React, { useEffect, useState } from "react";
-import Sidebar from "./Sidebar";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import ManageSkillModel from "./ManageSkillModel";
+import Sidebar from "./Sidebar";
+import AddUserSkillModel from "./AddUserSkillModel";
+import Cookies from "js-cookie";
 
-const ManageSkills = () => {
-  const [skillsData, setSkillsData] = useState([]);
+const UpdateSkillSet = () => {
+  //   const [skillsData, setSkillsData] = useState([]);
+  const [userSkillsData, setUserSkillsData] = useState([]);
+  //   useEffect(() => {
+  //     const fetchData = async () => {
+  //       try {
+  //         const response = await axios.get("http://localhost:1200/api/skill");
+  //         setSkillsData(response.data);
+  //       } catch (error) {
+  //         console.error("Error fetching data:", error);
+  //       }
+  //     };
+  //     fetchData();
+  //   }, []);
+  const userid = Cookies.get("userid");
+  const degnid = Cookies.get("degnid");
+
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchSkillsAndUserSkills = async () => {
       try {
-        const response = await axios.get("http://localhost:1200/api/skill");
-        setSkillsData(response.data);
+        const [skillsResponse, userSkillsResponse] = await Promise.all([
+          axios.get(`http://localhost:1200/api/skill/${degnid}`),
+          axios.get(`http://localhost:1200/api/userskill/${userid}`),
+        ]);
+
+        const skillsData = skillsResponse.data;
+        setUserSkillsData(userSkillsResponse.data);
+
+        const userSkillIds = userSkillsData.map((skill) => skill.skillid);
+
+        const filteredSkills = skillsData.filter(
+          (skill) => !userSkillIds.includes(skill.id)
+        );
+        // setReqdSkills(filteredSkills);
+        // console.log(skillsData, userSkillsData, reqdSkills);
+        // console.log(reqdSkills);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-    fetchData();
-  }, []);
 
+    fetchSkillsAndUserSkills();
+  }, [userid, degnid]);
+  console.log(userSkillsData);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [action, setAction] = useState("");
   const [selectedSkill, setSelectedSkill] = useState({ designations: [] });
@@ -24,7 +55,6 @@ const ManageSkills = () => {
   const handleManage = () => {
     setShowDeleteModal(true);
   };
-
   return (
     <div className="flex">
       <Sidebar />
@@ -34,7 +64,7 @@ const ManageSkills = () => {
             Mange the skills and their corresponding designations
           </h1>
           {showDeleteModal && (
-            <ManageSkillModel action={action} skill={selectedSkill} />
+            <AddUserSkillModel action={action} skill={selectedSkill} />
           )}
           <div className="flex justify-end">
             <button
@@ -66,19 +96,13 @@ const ManageSkills = () => {
                   Skills
                 </th>
                 <th scope="col" class="px-6 py-3">
-                  Decription
-                </th>
-                <th scope="col" class="px-6 py-3">
-                  Designation
-                </th>
-                <th scope="col" class="px-6 py-3">
-                  Actions
+                  Level
                 </th>
               </tr>
             </thead>
             <tbody>
-              {skillsData.length > 0
-                ? skillsData.map((skill) => (
+              {userSkillsData.length > 0
+                ? userSkillsData.map((skill) => (
                     <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
                       <th
                         scope="row"
@@ -87,33 +111,6 @@ const ManageSkills = () => {
                         {skill.name}
                       </th>
                       <td class="px-6 py-4">{skill.desc}</td>
-                      {skill.designations.map((degn) => (
-                        <tr class="px-6 py-4">{degn.name}</tr>
-                      ))}
-                      <td class="px-6 py-4 ">
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setSelectedSkill(skill);
-                            handleManage();
-                          }}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            fill="currentColor"
-                            class="bi bi-pencil-square"
-                            viewBox="0 0 16 16"
-                          >
-                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                            <path
-                              fill-rule="evenodd"
-                              d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"
-                            />
-                          </svg>
-                        </button>
-                      </td>
                     </tr>
                   ))
                 : "No data"}
@@ -125,4 +122,4 @@ const ManageSkills = () => {
   );
 };
 
-export default ManageSkills;
+export default UpdateSkillSet;

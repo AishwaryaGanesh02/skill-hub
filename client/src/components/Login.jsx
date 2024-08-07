@@ -32,9 +32,9 @@ export default function Login() {
       const parseRes = await response.data;
       if (parseRes.token) {
         Cookies.set("token", parseRes.token, { expires: 1 });
-        Cookies.set("user_id", parseRes.userid);
+        Cookies.set("userid", parseRes.userid);
         Cookies.set("role", parseRes.role);
-        Cookies.set("edgnid", parseRes.degnid);
+        Cookies.set("degnid", parseRes.degnid);
         alert("Successfully Logged in");
         setTimeout(() => {
           navigate("/dashboard");
@@ -104,16 +104,15 @@ export default function Login() {
               </Link>
             </div>
           </div>
-          <div className="relative">
+          {/* <div className="relative">
             <img
               //   src={Limage}
               alt="Background"
               className="w-[400px] h-full hidden rounded-r-2xl md:block object-cover bg-[#F9F9F9]"
             />
             <div className="absolute hidden bottom-10 right-0 p-6 md:block">
-              {/* Additional content or styles can be added here */}
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

@@ -1,12 +1,11 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import UpdateSkills from "./components/UpdateSkills";
 import ManageSkills from "./components/ManageSkills";
 import UserProfile from "./components/UserProfile";
 import Dashboard from "./components/Dashboard";
 import SignUp from "./components/SignUp";
 import Login from "./components/Login";
-
+import UpdateSkillSet from "./components/UpdateSkillSet";
 
 function App() {
   return (
@@ -18,7 +17,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/user" element={<UserProfile />} />
           <Route path="/manageSkills" element={<ManageSkills />} />
-          <Route path="/updateSkills" element={<UpdateSkills />} />
+          <Route path="/updateSkills" element={<UpdateSkillSet />} />
         </Routes>
       </BrowserRouter>
     </div>
