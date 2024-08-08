@@ -6,6 +6,7 @@ const {
   readAllSkills,
   updateSkill,
   readDesgSkills,
+  readOneSkill,
 } = require("../controller/skillController");
 
 // Add new skill
@@ -70,7 +71,7 @@ Access          Public
 Parameter       id
 Methods         GET
 */
-router.get("/:degnid", async (req, res) => {
+router.get("/degn/:degnid", async (req, res) => {
   try {
     const { degnid } = req.params;
     const desgSkills = await readDesgSkills(degnid);
@@ -99,4 +100,24 @@ router.put("/edit/:id", async (req, res) => {
   }
 });
 
+
+// Get one skill
+/*
+Route           /api/skill/
+Description     Get all skills
+Access          Public
+Parameter       id
+Methods         GET
+*/
+router.get("/:id", async (req, res) => {
+  try {
+    console.log("22222222")
+    const { id } = req.params;
+    console.log("jjj")
+    const skillInfo = await readOneSkill(id);
+    res.json(skillInfo);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 module.exports = router;

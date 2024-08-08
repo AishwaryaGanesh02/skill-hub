@@ -1,172 +1,209 @@
+Certainly! Here’s a detailed breakdown of the visualizations for both the user-employee and user-admin dashboards, including the necessary parameters and axes for each type of visualization.
 
-// To effectively visualize and analyze skills data on a dashboard, you can use a variety of charts, graphs,
-// and visual elements. Here are some key visualizations that can provide valuable insights:
+### For User-Employee Dashboard
 
-// ### 1. **Skills Distribution by Employee**
+1. **Skill Proficiency Overview**
+   - **Visualization**: Bar Chart
+   - **X-Axis**: Skill Names
+   - **Y-Axis**: Skill Levels (Beginner, Intermediate, Advanced)
+   - **Parameters**: 
+     - Skill Name (e.g., "JavaScript", "Python")
+     - Skill Level (e.g., 1 for Beginner, 2 for Intermediate, 3 for Advanced)
+   - **Description**: Displays the proficiency level of each skill.
 
-// - **Bar Chart**: Display the number of employees for each skill. This helps to quickly identify which skills are most
-// common or rare within the organization.
-// - **Pie Chart**: Show the proportion of different skills within the team or company.
-// Useful for understanding the overall distribution of skills.
+2. **Skill Improvement Tracking**
+   - **Visualization**: Line Graph
+   - **X-Axis**: Time (e.g., Months or Years)
+   - **Y-Axis**: Skill Level
+   - **Parameters**:
+     - Skill Name (distinct lines for each skill)
+     - Level Over Time (e.g., data points for each month/year)
+   - **Description**: Shows how the skill level has changed over time.
 
-// ### 2. **Skill Proficiency Levels**
+3. **Skill Distribution**
+   - **Visualization**: Pie Chart
+   - **Slices**: Skill Levels (Beginner, Intermediate, Advanced)
+   - **Parameters**:
+     - Skill Level Distribution (percentage or count of each level)
+   - **Description**: Illustrates the proportion of skills at each level.
 
-// - **Heatmap**: Visualize skill proficiency across employees or teams. Different colors represent different levels of proficiency,
-// making it easy to identify areas of strength and weakness.
-// - **Stacked Bar Chart**: Show the distribution of skill levels (e.g., beginner, intermediate, advanced) for each skill. Useful for assessing the overall skill maturity.
+4. **Recent Skill Updates**
+   - **Visualization**: List or Table
+   - **Columns**: Skill Name, Previous Level, New Level, Update Date
+   - **Parameters**:
+     - Skill Name
+     - Previous and New Levels
+     - Update Date
+   - **Description**: Displays a list of recently updated skills with details.
 
-// ### 3. **Skill Gaps Analysis**
+5. **Skill Comparison**
+   - **Visualization**: Radar Chart or Bar Chart
+   - **X-Axis**: Skills
+   - **Y-Axis**: Skill Levels
+   - **Parameters**:
+     - Employee Skill Levels
+     - Peer Average Skill Levels
+   - **Description**: Compares the employee’s skill levels to average levels of peers.
 
-// - **Gap Analysis Chart**: Compare required skills for specific roles with the existing skills of employees. This can be displayed as a bar chart or table to highlight gaps.
-// - **Bubble Chart**: Plot skills on a chart where the size of the bubble represents the skill gap and the position represents proficiency and importance.
+6. **Skill Goals**
+   - **Visualization**: Progress Bar or Gauge
+   - **X-Axis**: Skill Name or Goal
+   - **Y-Axis**: Progress Percentage
+   - **Parameters**:
+     - Skill Name
+     - Target Skill Level
+     - Current Skill Level
+   - **Description**: Shows progress towards achieving skill development goals.
 
-// ### 4. **Skill Utilization by Role**
+### For User-Admin Dashboard
 
-// - **Radar Chart (Spider Chart)**: Show the skill set of an employee compared to the required skills for their role. This helps visualize alignment and gaps.
-// - **Column Chart**: Display the number of tasks or projects utilizing each skill. Useful for understanding how skills are applied in practice.
+1. **Overall Skill Proficiency**
+   - **Visualization**: Aggregated Bar Chart or Heatmap
+   - **X-Axis**: Departments or Designations
+   - **Y-Axis**: Average Skill Levels
+   - **Parameters**:
+     - Department/Designation
+     - Average Skill Level (e.g., mean or median level)
+   - **Description**: Displays average skill levels across the organization.
 
-// ### 5. **Training and Development Needs**
+2. **Skill Distribution Across Departments**
+   - **Visualization**: Heatmap or Stacked Bar Chart
+   - **X-Axis**: Skills
+   - **Y-Axis**: Departments
+   - **Parameters**:
+     - Skill Name
+     - Department
+     - Skill Level Distribution
+   - **Description**: Shows how skills are distributed across different departments.
 
-// - **Progress Bar**: Show the progress of employees toward acquiring new skills or completing training programs. Useful for tracking development initiatives.
-// - **Timeline Chart**: Illustrate the timeline of skill acquisition or training progress over time.
+3. **Employee Performance Insights**
+   - **Visualization**: Line Graphs or Trend Charts
+   - **X-Axis**: Time (e.g., Months or Years)
+   - **Y-Axis**: Skill Levels
+   - **Parameters**:
+     - Employee Names (different lines for each employee)
+     - Skill Level Over Time
+   - **Description**: Tracks individual employee performance over time.
 
-// ### 6. **Career Development and Promotion Readiness**
+4. **Skill Gaps Analysis**
+   - **Visualization**: Bar Chart or Heatmap
+   - **X-Axis**: Skills
+   - **Y-Axis**: Skill Levels or Gap Size
+   - **Parameters**:
+     - Skill Name
+     - Average Skill Level vs. Required Level
+   - **Description**: Identifies and visualizes areas where skills are lacking.
 
-// - **Career Path Diagram**: Visualize the skills needed for different career paths and where employees currently stand. This helps in planning for career development and promotions.
-// - **Competency Matrix**: Show the competencies required for various roles and map them against employees' skills to identify potential for advancement.
+5. **Training Needs**
+   - **Visualization**: Table or Bar Chart
+   - **Columns**: Skill Name, Number of Employees Below Threshold, Required Training
+   - **Parameters**:
+     - Skill Name
+     - Count of Employees Below Required Skill Level
+   - **Description**: Lists skills that need training based on current skill levels.
 
-// ### 7. **Team Skill Composition**
+6. **Departmental Skill Overview**
+   - **Visualization**: Pie Chart or Grouped Bar Chart
+   - **X-Axis**: Departments
+   - **Y-Axis**: Skill Coverage or Expertise Level
+   - **Parameters**:
+     - Department Name
+     - Skill Coverage (e.g., percentage of employees with each skill)
+   - **Description**: Provides an overview of skill distribution within each department.
 
-// - **Bubble Matrix**: Display team members on a grid with one axis representing one skill and the other axis representing another skill. The size of the bubble can indicate proficiency or the number of team members with those skills.
-// - **Network Diagram**: Show how different skills are interrelated within a team or organization. Useful for visualizing skill dependencies and collaborations.
+7. **Employee Skill Contribution**
+   - **Visualization**: Scatter Plot or Bar Chart
+   - **X-Axis**: Employee Names or Projects
+   - **Y-Axis**: Skill Impact or Contribution Level
+   - **Parameters**:
+     - Employee Name
+     - Skill Contribution to Projects or Objectives
+   - **Description**: Measures and visualizes the impact of employee skills on organizational goals.
 
-// ### 8. **Employee Skill Trends**
+These visualizations and their parameters will help convey different aspects of skill data and performance effectively to both employees and admins.
 
-// - **Line Chart**: Track changes in skills over time for individual employees or teams. This can help visualize skill development and trends.
-// - **Growth Chart**: Display the growth or decline in the number of employees with specific skills over time.
+Sure! Here are the visualization details for the KPIs 4, 5, 7, and 8:
 
-// ### 9. **Benchmarking and Competitive Analysis**
+### 4. **Skill Distribution by Level**
 
-// - **Benchmark Chart**: Compare employee skills against industry benchmarks or competitors. This can be a bar chart or radar chart highlighting relative strengths and weaknesses.
-// - **Comparative Bar Chart**: Compare skills between different teams or departments to identify areas of competitive advantage or need.
+**Visualization Type**: **Pie Chart**
 
-// ### 10. **Interactive Dashboards**
+- **X-Axis**: Not applicable (Pie chart does not use X-axis).
+- **Y-Axis**: Not applicable (Pie chart does not use Y-axis).
+- **Values**: 
+  - **Slices**: Each slice represents a skill level (Beginner, Intermediate, Advanced).
+  - **Percentage**: Size of each slice represents the percentage of employees at that skill level.
 
-// - **Filters and Drill-Downs**: Allow users to interact with the dashboard by filtering data based on roles, departments, or skill levels. Interactive elements enable deeper analysis and personalized views.
-// - **Dynamic Reports**: Enable users to generate custom reports and visualizations based on selected criteria.
+**Details**:
+- **Labels**: Each slice should be labeled with the skill level and percentage of employees at that level.
+- **Color Scheme**: Use distinct colors for each skill level to differentiate them clearly.
 
-// ### Example Dashboard Layout
+### 5. **Skill Coverage per Designation**
 
-// 1. **Top Section**: Overview of skills distribution and proficiency levels (e.g., pie chart and heatmap).
-// 2. **Middle Section**: Skill gaps and training needs (e.g., gap analysis chart and progress bars).
-// 3. **Bottom Section**: Team composition and career development insights (e.g., radar chart and career path diagram).
+**Visualization Type**: **Stacked Bar Chart**
 
-// ### Summary
+- **X-Axis**: Designations (e.g., Junior Developer, Senior Developer).
+- **Y-Axis**: Percentage of Skills Covered (0% to 100%).
+- **Values**: 
+  - **Bars**: Each bar represents a designation.
+  - **Stacks**: Each segment within the bar shows the percentage of skill coverage for that designation.
 
-// Effective dashboards for skill data should use a combination of visualizations to provide a comprehensive view of skills across employees, teams, and roles. The choice of visualizations should align with the specific insights you want to derive, such as skill distribution, proficiency levels, skill gaps, and training needs. Interactive and dynamic elements can enhance the usability and depth of the dashboard.
-//
+**Details**:
+- **Labels**: Each bar should be labeled with the percentage of skills covered.
+- **Color Scheme**: Use different colors to represent various skills within the designation.
 
-// If the skills are specific to designations (roles or job titles) within your organization, you can tailor the dashboard visualizations to reflect this relationship. Here’s how you can create effective visualizations in a dashboard that reflect the association between skills and designations:
+### 7. **Employee Skill Distribution**
 
-// ### 1. **Skills per Designation**
+**Visualization Type**: **Bar Chart**
 
-// - **Bar Chart**: Display the number of skills required for each designation. Each bar represents a designation,
-// and the height represents the number of skills associated with it.
-// - **Pie Chart**: Show the distribution of skills across different designations.
-// Each slice represents a designation, with the size proportional to the number of skills associated with it.
+- **X-Axis**: Skill Levels (Beginner, Intermediate, Advanced).
+- **Y-Axis**: Number of Employees.
+- **Values**:
+  - **Bars**: Each bar represents a skill level.
+  - **Height of Bars**: Represents the number of employees at each skill level.
 
-// ### 2. **Skill Requirements per Designation**
+**Details**:
+- **Labels**: Each bar should have a label indicating the number of employees at that skill level.
+- **Color Scheme**: Use different colors for each skill level for clarity.
 
-// - **Radar Chart (Spider Chart)**: Visualize the skill requirements for each designation. Each axis represents a skill, and the shape outlines the skills required for a particular designation.
-// - **Stacked Bar Chart**: Show how different skills are required across various designations. Each bar represents a designation, and the segments within the bar represent different skills.
+### 8. **Skill Requirement Fulfillment**
 
-// ### 3. **Skill Proficiency by Designation**
+**Visualization Type**: **Progress Bar**
 
-// - **Heatmap**: Illustrate the proficiency levels of skills for each designation. Colors indicate the level of proficiency, making it easy to spot strengths and weaknesses.
-// - **Grouped Bar Chart**: Display skill proficiency levels for each designation. Each group of bars represents a designation, and each bar within the group represents a different skill.
+- **X-Axis**: Not applicable (Progress bar is typically vertical).
+- **Y-Axis**: Not applicable (Progress bar does not use Y-axis).
+- **Values**:
+  - **Bar Length**: Represents the percentage of skill requirements met.
+  - **Target Line**: A line indicating the ideal 100% fulfillment.
 
-// ### 4. **Skill Gaps for Designations**
+**Details**:
+- **Labels**: Display the percentage of requirements met on the bar.
+- **Color Scheme**: Use a single color to represent fulfillment, with a different color or a dashed line for the target (100%).
 
-// - **Gap Analysis Chart**: Compare the skills required for each designation with the skills that employees in those designations currently have. This can be displayed as a bar chart showing the gap for each skill.
-// - **Bubble Chart**: Show skill gaps for different designations, where each bubble represents a designation, the size of the bubble represents the gap size, and the color represents proficiency.
+### Summary of Visualization Details
 
-// ### 5. **Training Needs for Designations**
+1. **Skill Distribution by Level (Pie Chart)**
+   - **X-Axis**: N/A
+   - **Y-Axis**: N/A
+   - **Values**: Skill levels, percentages
+   - **Details**: Pie slices with labels and distinct colors
 
-// - **Progress Bars**: Track the progress of employees in gaining the required skills for specific designations. Each progress bar represents a skill and shows how close employees are to meeting the requirements.
-// - **Timeline Chart**: Display the progress of skill acquisition over time for each designation. This helps in understanding how skill levels are evolving.
+2. **Skill Coverage per Designation (Stacked Bar Chart)**
+   - **X-Axis**: Designations
+   - **Y-Axis**: Percentage of Skills Covered
+   - **Values**: Skill coverage percentages
+   - **Details**: Bars with stacked segments and distinct colors
 
-// ### 6. **Skill Distribution Across Designations**
+3. **Employee Skill Distribution (Bar Chart)**
+   - **X-Axis**: Skill Levels
+   - **Y-Axis**: Number of Employees
+   - **Values**: Number of employees at each skill level
+   - **Details**: Bars with labels and distinct colors
 
-// - **Treemap**: Visualize the hierarchical relationship between designations and skills. Each block represents a designation, with sub-blocks showing the skills associated with it.
-// - **Sunburst Chart**: Show the hierarchical structure of designations and their associated skills. The center represents the root, and the layers outward represent designations and skills.
+4. **Skill Requirement Fulfillment (Progress Bar)**
+   - **X-Axis**: N/A
+   - **Y-Axis**: N/A
+   - **Values**: Percentage of requirements met
+   - **Details**: Progress bar with percentage and target line
 
-// ### 7. **Career Development and Promotion**
-
-// - **Career Path Diagram**: Map out the skills required for advancing from one designation to another. This helps employees see the path for career progression based on skill acquisition.
-// - **Competency Matrix**: Compare the competencies required for different designations and visualize how employees meet these requirements.
-
-// ### 8. **Skill Utilization by Designation**
-
-// - **Column Chart**: Show how often specific skills are utilized in each designation. Each column represents a designation, and the height represents the frequency or importance of the skill.
-// - **Network Diagram**: Visualize the connections between designations and skills, showing how skills are distributed and utilized across different roles.
-
-// ### Example Dashboard Layout
-
-// 1. **Top Section**: Overview of skills required by each designation (e.g., bar chart and pie chart).
-// 2. **Middle Section**: Skill proficiency and gaps for each designation (e.g., heatmap and gap analysis chart).
-// 3. **Bottom Section**: Training needs and career development (e.g., progress bars and career path diagram).
-
-// ### Implementation Example
-
-// **1. Skills per Designation**
-
-// ```javascript
-// const { PrismaClient } = require('@prisma/client');
-// const prisma = new PrismaClient();
-
-// async function getSkillsPerDesignation() {
-//   const designations = await prisma.designation.findMany({
-//     include: {
-//       Skills: true, // Include associated Skills
-//     },
-//   });
-
-//   const skillsPerDesignation = designations.map(designation => ({
-//     designation: designation.name,
-//     skillCount: designation.Skills.length,
-//   }));
-
-//   console.log(skillsPerDesignation);
-// }
-
-// getSkillsPerDesignation();
-// ```
-
-// **2. Skill Requirements per Designation**
-
-// ```javascript
-// async function getSkillRequirements() {
-//   const designations = await prisma.designation.findMany({
-//     include: {
-//       Skills: true,
-//     },
-//   });
-
-//   // Map the data for visualization (e.g., radar chart)
-//   const skillRequirements = designations.map(designation => ({
-//     designation: designation.name,
-//     skills: designation.Skills.map(skill => skill.name),
-//   }));
-
-//   console.log(skillRequirements);
-// }
-
-// getSkillRequirements();
-// ```
-
-// ### Summary
-
-// For a dashboard focusing on skills specific to designations:
-// - Use visualizations that show the relationship between skills and designations.
-// - Include charts and graphs that reflect the requirements, proficiency levels, gaps, and distribution of skills across designations.
-// - Interactive elements can help users filter by designation or skill and explore detailed insights.
+These visualizations will help to effectively communicate the data related to skills and performance, making it easier for admins to interpret and act upon the insights.

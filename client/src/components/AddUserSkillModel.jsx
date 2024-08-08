@@ -13,21 +13,17 @@ const AddSkillModal = () => {
     const fetchSkillsAndUserSkills = async () => {
       try {
         const [skillsResponse, userSkillsResponse] = await Promise.all([
-          axios.get(`http://localhost:1200/api/skill/${degnid}`),
+          axios.get(`http://localhost:1200/api/skill/degn/${degnid}`),
           axios.get(`http://localhost:1200/api/userskill/${userid}`),
         ]);
 
         const skillsData = skillsResponse.data;
-        const userSkillsData = userSkillsResponse.data;
-
-        const userSkillIds = userSkillsData.map((skill) => skill.skillid);
+        const userSkillIds = userSkillsResponse.data;
 
         const filteredSkills = skillsData.filter(
           (skill) => !userSkillIds.includes(skill.id)
         );
         setReqdSkills(filteredSkills);
-        console.log(skillsData, userSkillsData, reqdSkills);
-        console.log(reqdSkills);
       } catch (error) {
         console.error("Error fetching data:", error);
       }

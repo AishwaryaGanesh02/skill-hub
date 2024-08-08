@@ -29,9 +29,6 @@ const deleteUserSkill = async (id) => {
   }
 };
 
-// I have an api to get a  list of roles and their corresponding skills
-// I have an api to get a list users and their skills
-// Do I require another api to to get the skills that the user is missing or can i compute that at the front end?
 const readAllUserSkill = async () => {
   try {
     const alluserSkill = await prisma.userSkill.findMany();
@@ -43,16 +40,16 @@ const readAllUserSkill = async () => {
 
 const updateUserSkill = async (id, info) => {
   try {
+    console.log(id, info)
     const userSkill = await prisma.userSkill.update({
       where: {
         id: Number(id),
       },
       data: {
-        name: info.name,
-        desc: info.desc,
-        degnid: info.degnid,
+        level: info.level,
       },
     });
+    console.log(userSkill, "ddddddd")
     return { success: true };
   } catch (error) {
     throw new Error("Error updating userSkills: " + error.message);
@@ -66,6 +63,8 @@ const readOneUserSkill = async (id) => {
         userid: Number(id),
       },
     });
+
+
     return userSkill;
   } catch (error) {
     throw new Error("Error fetching userSkills: " + error.message);

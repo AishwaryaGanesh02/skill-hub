@@ -5,19 +5,8 @@ import AddUserSkillModel from "./AddUserSkillModel";
 import Cookies from "js-cookie";
 
 const UpdateSkillSet = () => {
-  //   const [skillsData, setSkillsData] = useState([]);
   const [userSkillsData, setUserSkillsData] = useState([]);
-  //   useEffect(() => {
-  //     const fetchData = async () => {
-  //       try {
-  //         const response = await axios.get("http://localhost:1200/api/skill");
-  //         setSkillsData(response.data);
-  //       } catch (error) {
-  //         console.error("Error fetching data:", error);
-  //       }
-  //     };
-  //     fetchData();
-  //   }, []);
+
   const userid = Cookies.get("userid");
   const degnid = Cookies.get("degnid");
 
@@ -25,21 +14,35 @@ const UpdateSkillSet = () => {
     const fetchSkillsAndUserSkills = async () => {
       try {
         const [skillsResponse, userSkillsResponse] = await Promise.all([
-          axios.get(`http://localhost:1200/api/skill/${degnid}`),
+          // axios.get(`http://localhost:1200/api/skill/degn/${degnid}`),
           axios.get(`http://localhost:1200/api/userskill/${userid}`),
         ]);
-
-        const skillsData = skillsResponse.data;
-        setUserSkillsData(userSkillsResponse.data);
+        // const skillsData = skillsResponse.data;
+        const userSkillsData = userSkillsResponse.data;
 
         const userSkillIds = userSkillsData.map((skill) => skill.skillid);
 
-        const filteredSkills = skillsData.filter(
-          (skill) => !userSkillIds.includes(skill.id)
+        const userSkillDetailsPromises = userSkillIds.map((skillId) =>
+          axios.get(`http://localhost:1200/api/skill/${skillId}`)
         );
-        // setReqdSkills(filteredSkills);
-        // console.log(skillsData, userSkillsData, reqdSkills);
-        // console.log(reqdSkills);
+
+        const userSkillDetailsResponses = await Promise.all(
+          userSkillDetailsPromises
+        );
+
+        const combinedSkillsData = userSkillDetailsResponses.map(
+          (response) => ({
+            ...response.data,
+            level: userSkillsData.find(
+              (skill) => skill.skillid === response.data.id
+            ).level,
+            userskillid: userSkillsData.find(
+              (skill) => skill.skillid === response.data.id
+            ).id,
+          })
+        );
+
+        setUserSkillsData(combinedSkillsData);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -47,7 +50,7 @@ const UpdateSkillSet = () => {
 
     fetchSkillsAndUserSkills();
   }, [userid, degnid]);
-  console.log(userSkillsData);
+
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [action, setAction] = useState("");
   const [selectedSkill, setSelectedSkill] = useState({ designations: [] });
@@ -55,31 +58,69 @@ const UpdateSkillSet = () => {
   const handleManage = () => {
     setShowDeleteModal(true);
   };
+
+  const [editableSkillId, setEditableSkillId] = useState(null);
+  const [updatedLevels, setUpdatedLevels] = useState({});
+
+  const handleLevelChange = (skillId, level) => {
+    setUpdatedLevels((prev) => ({
+      ...prev,
+      [skillId]: level,
+    }));
+  };
+
+  const handleSave = async (userskillid) => {
+    const newLevel = updatedLevels[userskillid];
+    if (newLevel !== undefined) {
+      try {
+        await axios.put(
+          `http://localhost:1200/api/userskill/edit/${userskillid}`,
+          {
+            level: newLevel,
+          }
+        );
+        alert("Skill level updated");
+
+        setUserSkillsData((prev) =>
+          prev.map((skill) =>
+            skill.userskillid === userskillid
+              ? { ...skill, level: newLevel }
+              : skill
+          )
+        );
+        setEditableSkillId(null);
+      } catch (error) {
+        console.error("Error updating skill level:", error);
+      }
+    }
+  };
+
   return (
     <div className="flex">
       <Sidebar />
-      <div className="m-3">
-        <div className="">
-          <h1 className="font-bold text-center">
-            Mange the skills and their corresponding designations
-          </h1>
+      <div className="m-3 w-full">
+        <div>
+          <h1 className="font-bold text-center">Manage your skill set</h1>
           {showDeleteModal && (
             <AddUserSkillModel action={action} skill={selectedSkill} />
           )}
-          <div className="flex justify-end">
+        </div>
+        <div>
+          <div className="flex justify-end mb-4">
             <button
               type="button"
               onClick={() => {
                 setAction("Add");
                 handleManage();
               }}
+              className="px-4 py-2 bg-blue-500 text-white rounded"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
                 height="16"
                 fill="currentColor"
-                class="bi bi-plus-square"
+                className="bi bi-plus-square"
                 viewBox="0 0 16 16"
               >
                 <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
@@ -87,39 +128,106 @@ const UpdateSkillSet = () => {
               </svg>
             </button>
           </div>
-        </div>
-        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-          <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-              <tr>
-                <th scope="col" class="px-6 py-3">
-                  Skills
-                </th>
-                <th scope="col" class="px-6 py-3">
-                  Level
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {userSkillsData.length > 0
-                ? userSkillsData.map((skill) => (
-                    <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                      <th
-                        scope="row"
-                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                      >
+
+          <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                  <th scope="col" className="px-6 py-3">
+                    Skills
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Description
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Level
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {userSkillsData.length > 0 ? (
+                  userSkillsData.map((skill) => (
+                    <tr
+                      key={skill.userskillid}
+                      className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
+                    >
+                      <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         {skill.name}
-                      </th>
-                      <td class="px-6 py-4">{skill.desc}</td>
+                      </td>
+                      <td className="px-6 py-4">{skill.desc}</td>
+                      <td className="px-6 py-4">
+                        {editableSkillId === skill.userskillid ? (
+                          <div className="flex gap-2">
+                            {["Beginner", "Intermediate", "Advanced"].map(
+                              (label, index) => (
+                                <label
+                                  key={index}
+                                  className="inline-flex items-center"
+                                >
+                                  <input
+                                    type="radio"
+                                    name={`level-${skill.userskillid}`}
+                                    value={index + 1}
+                                    checked={
+                                      updatedLevels[skill.userskillid] ===
+                                      index + 1
+                                    }
+                                    onChange={() =>
+                                      handleLevelChange(
+                                        skill.userskillid,
+                                        index + 1
+                                      )
+                                    }
+                                    className="form-radio"
+                                  />
+                                  <span className="ml-2">{label}</span>
+                                </label>
+                              )
+                            )}
+                          </div>
+                        ) : (
+                          ["Beginner", "Intermediate", "Advanced"][
+                            skill.level - 1
+                          ]
+                        )}
+                      </td>
+                      <td className="px-6 py-4">
+                        {editableSkillId === skill.userskillid ? (
+                          <button
+                            onClick={() => handleSave(skill.userskillid)}
+                            className="px-4 py-2 bg-green-500 text-white rounded"
+                          >
+                            Save
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() =>
+                              setEditableSkillId(skill.userskillid)
+                            }
+                            className="px-4 py-2 bg-yellow-500 text-white rounded"
+                          >
+                            Edit
+                          </button>
+                        )}
+                      </td>
                     </tr>
                   ))
-                : "No data"}
-            </tbody>
-          </table>
+                ) : (
+                  <tr>
+                    <td colSpan="4" className="px-6 py-4 text-center">
+                      No data
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
   );
 };
-
 export default UpdateSkillSet;

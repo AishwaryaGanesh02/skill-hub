@@ -90,9 +90,11 @@ Methods         PUT
 */
 router.put("/edit/:id", async (req, res) => {
   try {
+    console.log("9999999");
     const { id } = req.params;
     const info = req.body;
-    await updateSkill(id, info);
+    console.log(info)
+    await updateUserSkill(id, info);
     res.status(201).json({ message: "Skill updated successfully" });
   } catch (error) {
     res.status(500).json({ message: error.message });

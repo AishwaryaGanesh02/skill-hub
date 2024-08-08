@@ -128,10 +128,25 @@ const readDesgSkills = async (id) => {
   }
 };
 
+const readOneSkill = async (id) => {
+  try {
+    const skill = await prisma.skill.findUnique({
+      where: {
+        id: Number(id),
+      },
+    });
+    console.log(skill)
+    return skill;
+  } catch (error) {
+    throw new Error("Error fetching skill: " + error.message);
+  }
+};
+
 module.exports = {
   addSkill,
   deleteSkill,
   readAllSkills,
   updateSkill,
   readDesgSkills,
+  readOneSkill,
 };
