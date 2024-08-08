@@ -96,9 +96,9 @@ const UpdateSkillSet = () => {
   };
 
   return (
-    <div className="flex">
+    <div className="">
       <Sidebar />
-      <div className="m-3 w-full">
+      <div className="m-3 sm:ml-42 md:ml-60">
         <div>
           <h1 className="font-bold text-center">Manage your skill set</h1>
           {showDeleteModal && (

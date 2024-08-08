@@ -140,6 +140,7 @@ const Skills_BarChart = () => {
         series={chartOptions.series}
         type="bar"
         height={500}
+        width={500}
       />
     </div>
   );

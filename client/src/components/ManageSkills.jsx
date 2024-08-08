@@ -26,9 +26,9 @@ const ManageSkills = () => {
   };
 
   return (
-    <div className="flex">
+    <div className="">
       <Sidebar />
-      <div className="m-3">
+      <div className="m-3 sm:ml-42 md:ml-60">
         <div className="">
           <h1 className="font-bold text-center">
             Mange the skills and their corresponding designations

@@ -12,16 +12,6 @@ const LevelsCount_PieChart = () => {
         type: "pie",
       },
       labels: [],
-      responsive: [
-        {
-          breakpoint: 480,
-          options: {
-            chart: {
-              width: 200,
-            },
-          },
-        },
-      ],
     },
   });
 
@@ -51,16 +41,6 @@ const LevelsCount_PieChart = () => {
               width: 380,
             },
             labels,
-            responsive: [
-              {
-                breakpoint: 480,
-                options: {
-                  chart: {
-                    width: 200,
-                  },
-                },
-              },
-            ],
           },
         });
       } catch (error) {
@@ -78,7 +58,7 @@ const LevelsCount_PieChart = () => {
         options={chartOptions.options}
         series={chartOptions.series}
         type="pie"
-        width={380}
+        width={500}
       />
     </div>
   );

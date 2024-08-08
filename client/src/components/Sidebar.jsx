@@ -4,7 +4,7 @@ const Sidebar = () => {
   const userRole = Cookies.get("role");
   const path = userRole === "admin" ? "/manageSkills" : "/updateskills";
   return (
-    <aside className="h-screen w-1/6 bg-blue-600">
+    <aside className="fixed top-0 h-full sm:w-40 md:w-56 bg-blue-600">
       <div className="text-start d-flex flex-column flex-shrink-0 p-3 h-100">
         <ul className="nav nav-pills flex-column mb-auto text-black">
           <li className="nav-item">
@@ -19,7 +19,7 @@ const Sidebar = () => {
             </a>
           </li>
           <li>
-            <a href="#" className="nav-link text-black">
+            <a href="/profile" className="nav-link text-black">
               Profile
             </a>
           </li>
