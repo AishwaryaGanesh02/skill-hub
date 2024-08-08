@@ -40,7 +40,6 @@ const readAllUserSkill = async () => {
 
 const updateUserSkill = async (id, info) => {
   try {
-    console.log(id, info)
     const userSkill = await prisma.userSkill.update({
       where: {
         id: Number(id),
@@ -49,7 +48,7 @@ const updateUserSkill = async (id, info) => {
         level: info.level,
       },
     });
-    console.log(userSkill, "ddddddd")
+
     return { success: true };
   } catch (error) {
     throw new Error("Error updating userSkills: " + error.message);
@@ -63,11 +62,28 @@ const readOneUserSkill = async (id) => {
         userid: Number(id),
       },
     });
-
-
     return userSkill;
   } catch (error) {
     throw new Error("Error fetching userSkills: " + error.message);
+  }
+};
+
+const calculateAverage = async (id) => {
+  try {
+    // Aggregate to sum all levels
+    const result = await prisma.userSkill.aggregate({
+      where: {
+        skillid: Number(id),
+      },
+      _avg: {
+        level: true,
+      },
+    });
+    const avgerage = result._avg.level || 0;
+    return avgerage;
+  } catch (error) {
+    throw new Error("Error fetching userSkills: " + error.message);
+  } finally {
   }
 };
 
@@ -77,4 +93,5 @@ module.exports = {
   readAllUserSkill,
   updateUserSkill,
   readOneUserSkill,
+  calculateAverage,
 };

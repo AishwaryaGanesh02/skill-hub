@@ -18,7 +18,9 @@ const AddSkillModal = () => {
         ]);
 
         const skillsData = skillsResponse.data;
-        const userSkillIds = userSkillsResponse.data;
+        const userSkillIds = userSkillsResponse.data.map(
+          (skill) => skill.skillid
+        );
 
         const filteredSkills = skillsData.filter(
           (skill) => !userSkillIds.includes(skill.id)
@@ -138,8 +140,9 @@ const AddSkillModal = () => {
             <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 sm:align-items-center">
               <button
                 type="submit"
-                className="inline-flex w-full font-open-sans justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 sm:ml-3 sm:w-auto"
+                className="disabled:opacity-25 disabled:cursor-not-allowed inline-flex w-full font-open-sans justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm cursor-pointer sm:ml-3 sm:w-auto"
                 onClick={handleSave}
+                disabled={reqdSkills.length > 0 ? false : true}
               >
                 Save
               </button>

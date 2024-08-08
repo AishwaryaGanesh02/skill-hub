@@ -14,10 +14,10 @@ const UpdateSkillSet = () => {
     const fetchSkillsAndUserSkills = async () => {
       try {
         const [skillsResponse, userSkillsResponse] = await Promise.all([
-          // axios.get(`http://localhost:1200/api/skill/degn/${degnid}`),
+          axios.get(`http://localhost:1200/api/skill/degn/${degnid}`),
           axios.get(`http://localhost:1200/api/userskill/${userid}`),
         ]);
-        // const skillsData = skillsResponse.data;
+
         const userSkillsData = userSkillsResponse.data;
 
         const userSkillIds = userSkillsData.map((skill) => skill.skillid);

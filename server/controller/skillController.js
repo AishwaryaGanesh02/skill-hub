@@ -135,7 +135,6 @@ const readOneSkill = async (id) => {
         id: Number(id),
       },
     });
-    console.log(skill)
     return skill;
   } catch (error) {
     throw new Error("Error fetching skill: " + error.message);

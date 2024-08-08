@@ -6,6 +6,7 @@ export default function SignUp() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [degn, setDegn] = useState("");
+  const [gender, setGender] = useState("");
   const [password, setPassword] = useState("");
   const [repassword, setrePassword] = useState("");
   const [designations, setDesignations] = useState([]); // State to hold designations
@@ -154,6 +155,44 @@ export default function SignUp() {
                     </option>
                   ))}
                 </select>
+              </div>
+              <div className="mt-3">
+                <span className="mb-2 rext-md">Gender</span>
+                <div className="flex items-center">
+                  <label className="inline-flex items-center mt-1.5">
+                    <input
+                      type="radio"
+                      name="gender"
+                      value="Male"
+                      checked={gender === "Male"}
+                      onChange={(e) => setGender(e.target.value)}
+                      className="form-radio h-4 w-4 text-indigo-600 transition duration-150 ease-in-out box-border border-0 shadow-sm ring-1 ring-inset  bg-textbg ring-gray-300"
+                    />
+                    <span className="ml-2">Male</span>
+                  </label>
+                  <label className="inline-flex items-center ml-6">
+                    <input
+                      type="radio"
+                      name="gender"
+                      value="Female"
+                      checked={gender === "Female"}
+                      onChange={(e) => setGender(e.target.value)}
+                      className="form-radio h-4 w-4 text-indigo-600 transition duration-150 ease-in-out box-border border-0 shadow-sm ring-1 ring-inset bg-textbg ring-gray-300"
+                    />
+                    <span className="ml-2">Female</span>
+                  </label>
+                  <label className="inline-flex items-center ml-6">
+                    <input
+                      type="radio"
+                      name="gender"
+                      value="Others"
+                      checked={gender === "Others"}
+                      onChange={(e) => setGender(e.target.value)}
+                      className="form-radio h-4 w-4 text-indigo-600 transition duration-150 ease-in-out box-border border-0 shadow-sm ring-1 ring-inset  bg-textbg ring-gray-300"
+                    />
+                    <span className="ml-2">Others</span>
+                  </label>
+                </div>
               </div>
               <div className="mt-3">
                 <span className="mb-2 text-md">Password</span>

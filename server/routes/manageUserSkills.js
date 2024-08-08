@@ -6,9 +6,10 @@ const {
   readAllUserSkill,
   updateUserSkill,
   readOneUserSkill,
+  calculateAverage,
 } = require("../controller/manageUserSkillsContoller");
 
-// Add new user_skill
+// Add new user_skill          #############
 /*
 Route           /api/userskill/add
 Description     Add new user skill
@@ -19,7 +20,6 @@ Methods         POST
 router.post("/add", async (req, res) => {
   try {
     const info = req.body;
-    console.log("----s");
     await addUserSkill(info);
     res.status(201).json({ message: "User Skill added successfully" });
   } catch (error) {
@@ -62,7 +62,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Get skills of a user
+// Get skills of a user    ########
 /*
 Route           /api/userskill/
 Description     Get all skills of a user
@@ -80,7 +80,25 @@ router.get("/:userid", async (req, res) => {
   }
 });
 
-// Update skill
+// Get avgerage of skills
+/*
+Route           /api/userskill/average/
+Description     Get all skills of a user
+Access          Public
+Parameter       skillid
+Methods         GET
+*/
+router.get("/average/:skillid", async (req, res) => {
+  try {
+    const { skillid } = req.params;
+    const userSkills = await calculateAverage(skillid);
+    res.json(userSkills);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// Update skill                 #######
 /*
 Route           /api/userskill/edit
 Description     Update skill
@@ -90,10 +108,8 @@ Methods         PUT
 */
 router.put("/edit/:id", async (req, res) => {
   try {
-    console.log("9999999");
     const { id } = req.params;
     const info = req.body;
-    console.log(info)
     await updateUserSkill(id, info);
     res.status(201).json({ message: "Skill updated successfully" });
   } catch (error) {

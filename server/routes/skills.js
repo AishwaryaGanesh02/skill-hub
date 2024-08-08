@@ -9,7 +9,7 @@ const {
   readOneSkill,
 } = require("../controller/skillController");
 
-// Add new skill
+// Add new skill     #######
 /*
 Route           /api/skill/add
 Description     Add new skill
@@ -46,7 +46,7 @@ router.delete("/delete/:id", async (req, res) => {
   }
 });
 
-// Get all skills
+// Get all skills     ################
 /*
 Route           /api/skill/
 Description     Get all skills
@@ -63,7 +63,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Get skills of a designation
+// Get skills of a designation    ##################
 /*
 Route           /api/skill/
 Description     Get all skills of a designation
@@ -81,7 +81,7 @@ router.get("/degn/:degnid", async (req, res) => {
   }
 });
 
-// Update skill
+// Update skill        ############
 /*
 Route           /api/skill/edit
 Description     Update skill
@@ -100,8 +100,7 @@ router.put("/edit/:id", async (req, res) => {
   }
 });
 
-
-// Get one skill
+// Get one skill        ###########
 /*
 Route           /api/skill/
 Description     Get all skills
@@ -111,9 +110,7 @@ Methods         GET
 */
 router.get("/:id", async (req, res) => {
   try {
-    console.log("22222222")
     const { id } = req.params;
-    console.log("jjj")
     const skillInfo = await readOneSkill(id);
     res.json(skillInfo);
   } catch (error) {

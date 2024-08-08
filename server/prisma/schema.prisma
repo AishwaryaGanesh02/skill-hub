@@ -20,6 +20,7 @@ model User {
   role       String      @db.VarChar(255)
   degn       Designation @relation(fields: [degnid], references: [id])
   degnid     Int
+  gender     String      @default("Male")
   UserSkills UserSkill[]
   password   String      @db.VarChar(255)
 }

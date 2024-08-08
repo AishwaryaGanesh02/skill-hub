@@ -6,7 +6,7 @@ const {
   readOneUser,
 } = require("../controller/userController");
 
-// Add new user
+// Add new user           ############
 /*
 Route           /api/user/add
 Description     Add new user
