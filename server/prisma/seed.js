@@ -1,6 +1,6 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 
 async function main() {
   // Seed depatments
@@ -58,6 +58,7 @@ async function main() {
       },
     ],
   });
+  // seed admin
   const saltRounds = 10;
   const salt = await bcrypt.genSalt(saltRounds);
   const bcryptPassword = await bcrypt.hash("1245", salt);

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ApexCharts from "react-apexcharts";
 
-const Skills_BarChart = ({ skillData, averageData }) => {
+const AvgSkillDegn_BarChart = ({ designationData }) => {
   const [chartOptions, setChartOptions] = useState({
     series: [],
     chart: {
@@ -17,42 +17,42 @@ const Skills_BarChart = ({ skillData, averageData }) => {
     xaxis: {
       categories: [],
       title: {
-        text: "Skill",
+        text: "designation",
       },
     },
     yaxis: {
       title: {
-        text: "Skill Level",
+        text: "Average Skill Level",
       },
+      labels: {
+        formatter: (val) =>
+          ["Beginner", "Intermediate", "Advanced"][val - 1] || val,
+      },
+      tickAmount: 3,
     },
   });
 
   useEffect(() => {
-    const processedData = skillData.map((data) => ({
-      skill: data.skill,
-      level: data.level,
-    }));
-
+    const designations = designationData.map((data) => data.designation);
+    const avgSkillLevels = designationData.map((data) =>
+      data.averageSkillLevel.toFixed(2)
+    );
     setChartOptions({
       series: [
         {
-          name: "Skill Level",
-          data: processedData.map((data) => data.level),
-        },
-        {
           name: "Average Skill Level",
-          data: averageData,
+          data: avgSkillLevels,
         },
       ],
       xaxis: {
-        categories: processedData.map((data) => data.skill),
+        categories: designations,
         title: {
-          text: "Skills",
+          text: "Designations",
         },
       },
       yaxis: {
         title: {
-          text: "Skill Level",
+          text: "Average Skill Level",
         },
         labels: {
           formatter: (val) =>
@@ -61,12 +61,12 @@ const Skills_BarChart = ({ skillData, averageData }) => {
         tickAmount: 3,
       },
     });
-  }, [skillData, averageData]);
+  }, [designationData]);
 
   return (
     <div id="chart">
       <h1 className="text-center font-bold text-2xl">
-        Skill Proficiency Overview
+        Average Skill Level by designation
       </h1>
       <ApexCharts
         options={chartOptions}
@@ -79,4 +79,4 @@ const Skills_BarChart = ({ skillData, averageData }) => {
   );
 };
 
-export default Skills_BarChart;
+export default AvgSkillDegn_BarChart;

@@ -1,15 +1,26 @@
 import React from "react";
 import Cookies from "js-cookie";
-import avatar from "./assets/avatar.png"; // Adjust path to your avatar
+import avatar from "./assets/avatar.png";
+import { useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
+  const navigator = useNavigate();
   const userRole = Cookies.get("role");
   const path = userRole === "admin" ? "/manageSkills" : "/updateskills";
-
+  const logout = () => {
+    Cookies.remove("token");
+    Cookies.remove("role");
+    Cookies.remove("userid");
+    Cookies.remove("degnid");
+    alert("Successfully logged out");
+    setTimeout(() => {
+      navigator("/");
+    }, 500);
+  };
   return (
     <aside className="fixed top-0 h-full sm:w-40 md:w-56 bg-blue-600 text-white flex flex-col">
       <div className="flex-shrink-0 p-3 bg-blue-700">
-        <div className="flex items-center justify-center mb-6 gap-3">
+        <div className="flex items-center justify-center my-3 gap-3">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="25"
@@ -35,6 +46,11 @@ const Sidebar = () => {
           <li className="nav-item">
             <a href={path} className="nav-link text-white">
               {userRole === "admin" ? "Manage Skills" : "Update Skill Set"}
+            </a>
+          </li>
+          <li className="nav-item">
+            <a onClick={logout} className="nav-link text-white">
+              Logout
             </a>
           </li>
         </ul>

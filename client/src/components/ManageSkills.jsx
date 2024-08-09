@@ -30,7 +30,7 @@ const ManageSkills = () => {
       <Sidebar />
       <div className="ml-3 xs:ml-40 sm:ml-40 md:ml-56 flex-1">
         <div className="flex-1 p-6 bg-gray-100">
-          <h1 className="text-2xl font-bold text-gray-800 mb-4">
+          <h1 className="font-extrabold text-21xl text-center mb-4">
             Manage Skills and Their Corresponding Designations
           </h1>
           {showDeleteModal && (

@@ -1,21 +1,17 @@
 const { PrismaClient } = require("@prisma/client");
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 const prisma = new PrismaClient();
 
 const addUser = async (info) => {
   try {
     if (info.repassword !== info.password) {
-      throw new Error("Password Mismatch");
-
+      return "Password Mismatch";
     }
-
-    // Check if user already exists
     const existingUser = await prisma.user.findUnique({
       where: { email: info.email },
     });
     if (existingUser) {
-      throw new Error("User already exists");
-
+      return "User already exists";
     }
 
     const saltRounds = 10;
@@ -31,7 +27,7 @@ const addUser = async (info) => {
         password: bcryptPassword,
       },
     });
-    return { success: true };
+    return "Successfully Registered";
   } catch (error) {
     throw new Error("Error adding user: " + error.message);
   }
@@ -71,13 +67,22 @@ const readOneUser = async (id) => {
     throw new Error("Error fetching users: " + error.message);
   }
 };
-// main()
-//   .then(async () => {
-//     await prisma.$disconnect();
-//   })
-//   .catch(async (e) => {
-//     console.error(e);
-//     await prisma.$disconnect();
-//     process.exit(1);
-//   });
-module.exports = { addUser, deleteUser, readAllUsers, readOneUser };
+
+const updateUser = async (id, info) => {
+  try {
+    const user = await prisma.user.update({
+      where: {
+        id: Number(id),
+      },
+      data: {
+        name: info.name,
+        gender: info.gender,
+      },
+    });
+    return { success: true };
+  } catch (error) {
+    throw new Error("Error updating skills: " + error.message);
+  }
+};
+
+module.exports = { addUser, deleteUser, readAllUsers, readOneUser, updateUser };

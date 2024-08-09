@@ -70,7 +70,6 @@ const readOneUserSkill = async (id) => {
 
 const calculateAverage = async (id) => {
   try {
-    // Aggregate to sum all levels
     const result = await prisma.userSkill.aggregate({
       where: {
         skillid: Number(id),
@@ -87,6 +86,80 @@ const calculateAverage = async (id) => {
   }
 };
 
+const calculateAveragesByDesignation = async () => {
+  try {
+    const designations = await prisma.designation.findMany({
+      select: {
+        id: true,
+        name: true,
+        Users: {
+          select: {
+            degnid: true,
+            UserSkills: {
+              select: {
+                skillid: true,
+                level: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    const results = await Promise.all(
+      designations.map(async (designation) => {
+        const allSkillLevels = [];
+
+        designation.Users.forEach((user) => {
+          user.UserSkills.forEach((userSkill) => {
+            allSkillLevels.push(userSkill.level);
+          });
+        });
+
+        const totalLevel = allSkillLevels.reduce(
+          (sum, level) => sum + level,
+          0
+        );
+        const averageLevel =
+          allSkillLevels.length > 0 ? totalLevel / allSkillLevels.length : 0;
+
+        return {
+          designation: designation.name,
+          averageSkillLevel: averageLevel,
+        };
+      })
+    );
+    return results;
+  } catch (error) {
+    console.error("Error calculating average skill levels:", error.message);
+    throw new Error("Error calculating average skill levels: " + error.message);
+  }
+};
+
+const calculateCountLevel = async () => {
+  try {
+    const results = await prisma.userSkill.groupBy({
+      by: ["level"],
+      _count: {
+        userid: true,
+      },
+    });
+    const formattedResults = results.reduce((acc, item) => {
+      acc[item.level] = item._count.userid;
+      return acc;
+    }, {});
+    return formattedResults;
+  } catch (error) {
+    console.error(
+      "Error calculating user count by skill level:",
+      error.message
+    );
+    throw new Error(
+      "Error calculating user count by skill level: " + error.message
+    );
+  }
+};
+
 module.exports = {
   addUserSkill,
   deleteUserSkill,
@@ -94,4 +167,6 @@ module.exports = {
   updateUserSkill,
   readOneUserSkill,
   calculateAverage,
+  calculateAveragesByDesignation,
+  calculateCountLevel,
 };

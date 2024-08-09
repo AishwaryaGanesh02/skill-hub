@@ -7,6 +7,8 @@ const {
   updateUserSkill,
   readOneUserSkill,
   calculateAverage,
+  calculateCountLevel,
+  calculateAveragesByDesignation,
 } = require("../controller/manageUserSkillsContoller");
 
 // Add new user_skill          #############
@@ -45,18 +47,52 @@ router.delete("/delete/:id", async (req, res) => {
   }
 });
 
-// Get all skills
+// Get count of user by level
+/*
+Route           /api/userskill/count-level
+Description     Get average
+Access          Public
+Parameter       NONE
+Methods         GET
+*/
+router.get("/count-level", async (req, res) => {
+  try {
+    const userSkills = await calculateCountLevel();
+    res.json(userSkills);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// Get all user skills  *******
 /*
 Route           /api/userskill/
-Description     Get all skills
+Description     Get all user skills
 Access          Public
 Parameter       NONE
 Methods         GET
 */
 router.get("/", async (req, res) => {
   try {
-    const allSkills = await readAllSkills();
+    const allSkills = await readAllUserSkill();
     res.json(allSkills);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// Get avgerage of skills by desg
+/*
+Route           /api/userskill/user-avg-degn
+Description     Get average
+Access          Public
+Parameter       NONE
+Methods         GET
+*/
+router.get("/user-avg-degn", async (req, res) => {
+  try {
+    const userSkills = await calculateAveragesByDesignation();
+    res.json(userSkills);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -83,7 +119,7 @@ router.get("/:userid", async (req, res) => {
 // Get avgerage of skills
 /*
 Route           /api/userskill/average/
-Description     Get all skills of a user
+Description     Get average
 Access          Public
 Parameter       skillid
 Methods         GET

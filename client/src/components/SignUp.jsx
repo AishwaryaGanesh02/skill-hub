@@ -9,18 +9,17 @@ export default function SignUp() {
   const [gender, setGender] = useState("");
   const [password, setPassword] = useState("");
   const [repassword, setrePassword] = useState("");
-  const [designations, setDesignations] = useState([]); // State to hold designations
+  const [designations, setDesignations] = useState([]);
   const [passwordStrength, setPasswordStrength] = useState("");
 
   const Navigate = useNavigate();
 
-  // Fetch designations from the backend
   useEffect(() => {
     const fetchDesignations = async () => {
       try {
         const response = await axios.get(
           "http://localhost:1200/api/designations"
-        ); // Replace with your API endpoint
+        );
         setDesignations(response.data);
       } catch (error) {
         console.error("Error fetching designations:", error);
@@ -77,11 +76,9 @@ export default function SignUp() {
         "http://localhost:1200/api/user/add",
         body
       );
-      if (response.status === 401) {
-        const errorMessage = response.data;
-        alert(errorMessage);
-      } else {
-        alert("Successfully Registered");
+      alert(response.data.result);
+
+      if (response.data.result === "Successfully Registered") {
         setTimeout(() => {
           Navigate("/");
         }, 500);
@@ -90,7 +87,6 @@ export default function SignUp() {
       console.error(err.message);
     }
 
-    // Clear form fields
     setName("");
     setEmail("");
     setDegn("");
@@ -273,13 +269,6 @@ export default function SignUp() {
                 Sign In
               </Link>
             </div>
-          </div>
-          <div className="relative flex items-center justify-center">
-            {/* <img
-              // src={Limage}
-              //   alt="Image"
-              className="w-[600px] h-[800px] rounded-r-2xl md:block mr-4"
-            /> */}
           </div>
         </div>
       </div>

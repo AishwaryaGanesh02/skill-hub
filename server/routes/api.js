@@ -3,7 +3,6 @@ const jwtGenerator = require("../JWTToken/jwtGenerator");
 const { PrismaClient } = require("@prisma/client");
 const bcrypt = require("bcrypt");
 const prisma = new PrismaClient();
-const Authorize = require("../middleware/authentication");
 
 // Login
 /*
@@ -16,7 +15,7 @@ Methods         POST
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-    // Find the user in the database
+
     const user = await prisma.user.findUnique({
       where: { email },
     });
@@ -24,18 +23,16 @@ router.post("/login", async (req, res) => {
     if (!user) {
       return res.json("Password or Email is incorrect");
     }
-    // Compare the provided password with the stored hashed password
+
     const passwordMatch = await bcrypt.compare(password, user.password);
 
     if (!passwordMatch) {
       return res.json("Password or Email is incorrect");
     }
 
-    // Generate JWT token
     const token = jwtGenerator(user.id);
     const { id, role, degnid } = user;
 
-    // Send response with token, role, degnid and user_id
     const response = {
       token,
       role,
@@ -68,6 +65,7 @@ router.get("/designations", async (req, res) => {
     res.status(500).send("Server Error");
   }
 });
+
 // Get one designations
 /*
 Route           /api/designation
@@ -86,7 +84,6 @@ router.get("/designation/:id", async (req, res) => {
     });
 
     res.json(response);
-    // console.log(response);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");

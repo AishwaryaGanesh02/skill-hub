@@ -8,7 +8,7 @@ const Dashboard = () => {
   return (
     <div className="">
       <Sidebar />
-      <div className="m-3 xs:ml-42 sm:ml-42 md:ml-60">
+      <div className="m-3 xs:ml-42 sm:ml-42 md:ml-60 lg:ml-60">
         {role === "admin" ? <AdminDashboard /> : <EmployeeDashboard />}
       </div>
     </div>

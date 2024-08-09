@@ -45,7 +45,6 @@ export default function Login() {
         navigate("/");
       }
     } catch (err) {
-      console.log(err);
       console.error(err.message);
     }
   };
@@ -99,22 +98,13 @@ export default function Login() {
                 </button>
               </div>
             </form>
-            <div className="text-center text-gray-400">
+            <div className="text-center ">
               Don't have an account?{" "}
               <Link to="/SignUp" className="font-bold">
                 Sign Up
               </Link>
             </div>
           </div>
-          {/* <div className="relative">
-            <img
-              //   src={Limage}
-              alt="Background"
-              className="w-[400px] h-full hidden rounded-r-2xl md:block object-cover bg-[#F9F9F9]"
-            />
-            <div className="absolute hidden bottom-10 right-0 p-6 md:block">
-            </div>
-          </div> */}
         </div>
       </div>
     </div>

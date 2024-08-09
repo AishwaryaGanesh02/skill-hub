@@ -62,7 +62,7 @@ const AddSkillModal = () => {
   };
 
   const handleClose = () => {
-    window.location.reload(); // Consider using a state to control modal visibility instead
+    window.location.reload();
   };
 
   return (
@@ -140,7 +140,7 @@ const AddSkillModal = () => {
             <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 sm:align-items-center">
               <button
                 type="submit"
-                className="disabled:opacity-25 disabled:cursor-not-allowed inline-flex w-full font-open-sans justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm cursor-pointer sm:ml-3 sm:w-auto"
+                className="disabled:opacity-25 disabled:cursor-not-allowed inline-flex w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm cursor-pointer sm:ml-3 sm:w-auto"
                 onClick={handleSave}
                 disabled={reqdSkills.length > 0 ? false : true}
               >
@@ -148,7 +148,7 @@ const AddSkillModal = () => {
               </button>
               <button
                 type="button"
-                className="mt-3 font-open-sans inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
                 onClick={handleClose}
               >
                 Cancel
