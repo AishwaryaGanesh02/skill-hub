@@ -32,6 +32,7 @@ module.exports = {
       },
     },
     fontSize: {
+      "4xl": "20px",
       "5xl": "24px",
       lgi: "19px",
       "13xl": "32px",

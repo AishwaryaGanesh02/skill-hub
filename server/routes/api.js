@@ -3,6 +3,7 @@ const jwtGenerator = require("../JWTToken/jwtGenerator");
 const { PrismaClient } = require("@prisma/client");
 const bcrypt = require("bcrypt");
 const prisma = new PrismaClient();
+const Authorize = require("../middleware/authentication");
 
 // Login
 /*
@@ -15,20 +16,19 @@ Methods         POST
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-
     // Find the user in the database
     const user = await prisma.user.findUnique({
       where: { email },
     });
 
     if (!user) {
-      return res.status(401).json("Password or Email is incorrect");
+      return res.json("Password or Email is incorrect");
     }
     // Compare the provided password with the stored hashed password
     const passwordMatch = await bcrypt.compare(password, user.password);
 
     if (!passwordMatch) {
-      return res.status(401).json("Password or Email is incorrect");
+      return res.json("Password or Email is incorrect");
     }
 
     // Generate JWT token

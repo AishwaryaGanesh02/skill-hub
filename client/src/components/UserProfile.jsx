@@ -366,24 +366,24 @@ import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import femaleAvatar from "./assets/Female-Avatar.png";
 import maleAvatar from "./assets/male-avatar.png";
+import avatar from "./assets/avatar.png";
 import Sidebar from "./Sidebar";
 
 function UserProfile() {
   const navigate = useNavigate();
   const userId = Cookies.get("userid");
 
-  const [user, setUser] = useState(null);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [gender, setGender] = useState("");
   const [isEditMode, setIsEditMode] = useState(false);
+  const editCSS = "ring-1 ring-gray-300 focus:ring-gray-300";
 
   useEffect(() => {
     if (userId) {
       axios
         .get(`http://localhost:1200/api/user/${userId}`)
         .then((response) => {
-          setUser(response.data);
           setName(response.data.name);
           setGender(response.data.gender);
           setEmail(response.data.email);
@@ -396,19 +396,16 @@ function UserProfile() {
 
   const handleSave = async () => {
     try {
-      // Make API call to save updated user profile
       await axios.put("http://localhost:1200/api/detail/edit-profile", {
         name,
         email,
         gender,
         userId,
       });
-      // Optionally notify user of successful save
-      // alert("Profile Updated!");
-      setIsEditMode(false); // Exit edit mode after saving
+      alert("Profile Updated!");
+      setIsEditMode(false);
     } catch (error) {
       console.error("Error updating profile:", error);
-      // Handle error, possibly show an error message to the user
     }
   };
 
@@ -417,115 +414,129 @@ function UserProfile() {
   };
 
   return (
-    <div className="">
+    <div className="flex">
       <Sidebar />
-      <div className="m-3 sm:ml-42 md:ml-60">
-        <div className="bg-white font-open-sans">
-          <div>
-            <div className="bg-blue-100 flex justify-between px-10 pt-16 pb-6">
-              <span className="text-white text-[50px]">Hello, {name}</span>
-            </div>
+      <div className="ml-3 xs:ml-40 sm:ml-40 md:ml-56 flex-1">
+        <div className="relative">
+          <div className="bg-blue-100 flex justify-between px-10 pt-16 pb-6 h-[30vh]">
+            <span className="text-white text-[50px]">Hello, {name}</span>
+          </div>
 
-            {/* Image and Edit/Save button section */}
-            <div className="flex justify-center items-center mt-[-50px]">
-              <div className="w-[200px] h-[200px] relative">
-                {gender === "Male" && (
-                  <img
-                    src={maleAvatar}
-                    alt="Maleuser"
-                    className="absolute inset-0 w-full h-full object-cover rounded-full"
-                  />
-                )}
-                {gender === "Female" && (
-                  <img
-                    src={femaleAvatar}
-                    alt="Femaleuser"
-                    className="absolute inset-0 w-full h-full object-cover rounded-full"
-                  />
-                )}
-                {gender === "Others" && (
-                  <div className="absolute inset-0 w-full h-full bg-gray-300 rounded-full">
-                    {/* Placeholder for other genders */}
-                  </div>
-                )}
+          <div className="z-50 relative top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex justify-center items-center">
+            <div className="w-[200px] h-[200px] relative">
+              {gender === "Male" && (
+                <img
+                  src={maleAvatar}
+                  alt="Male User"
+                  className="absolute inset-0 w-full h-full object-cover rounded-full"
+                />
+              )}
+              {gender === "Female" && (
+                <img
+                  src={femaleAvatar}
+                  alt="Female User"
+                  className="absolute inset-0 w-full h-full object-cover rounded-full"
+                />
+              )}
+              {gender === "Others" && (
+                <img
+                  src={avatar}
+                  alt="Other User"
+                  className="absolute inset-0 w-full h-full object-cover rounded-full"
+                />
+              )}
+            </div>
+          </div>
+
+          <div className="relative top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            <div className="-z-0 border-solid rounded-lg border-gray border-2 mx-[15%]">
+              <div className="flex justify-end m-4">
+                <button
+                  className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md"
+                  onClick={() => setIsEditMode(!isEditMode)}
+                >
+                  {isEditMode ? "Save" : "Edit Profile"}
+                </button>
               </div>
-            </div>
 
-            {/* Edit/Save button */}
-            <div className="flex justify-center mt-4">
-              <button
-                className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md"
-                onClick={() => setIsEditMode(!isEditMode)}
-              >
-                {isEditMode ? "Save" : "Edit Profile"}
-              </button>
-            </div>
-
-            {/* Profile details */}
-            <div className="user-profile-body mt-4">
-              <div className="bg-white rounded-lg border-solid border-black border-2 p-4">
-                <div className="flex items-center mb-4">
-                  <label className="w-36">Name:</label>
-                  <input
-                    type="text"
-                    className="text-black font-open-sans ml-4 w-full rounded-lg bg-textbg border-0 focus:ring-1 focus:ring-gray-300"
-                    value={name}
-                    onChange={(e) => handleInputChange(e, setName)}
-                    disabled={!isEditMode}
-                  />
-                </div>
-
-                <div className="flex items-center mb-4">
-                  <label className="w-36">Email:</label>
-                  <input
-                    type="text"
-                    className="text-black font-open-sans ml-4 w-full rounded-lg bg-textbg border-0 text-gray-500"
-                    value={email}
-                    disabled
-                  />
-                </div>
-
-                <div className="flex items-center">
-                  <label className="w-36">Gender:</label>
-                  <div className="ml-4">
+              <div className="profile-details w-[75%] mx-auto mb-5">
+                <div className="bg-white p-4">
+                  <div className="mt-5 font-open-sans flex items-center">
+                    <label className="w-36">Name:</label>
                     <input
-                      type="radio"
-                      id="male"
-                      value="Male"
-                      className="form-radio h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
-                      checked={gender === "Male"}
-                      onChange={(e) => handleInputChange(e, setGender)}
+                      type="text"
+                      className={`text-black font-open-sans ml-4 w-full rounded-lg border-0 ${
+                        isEditMode ? editCSS : ""
+                      }`}
+                      value={name}
+                      onChange={(e) => handleInputChange(e, setName)}
                       disabled={!isEditMode}
                     />
-                    <label htmlFor="male" className="ml-1 mr-3">
-                      Male
-                    </label>
+                  </div>
 
+                  <div className="mt-5 font-open-sans flex items-center">
+                    <label className="w-36">Email:</label>
                     <input
-                      type="radio"
-                      id="female"
-                      value="Female"
-                      className="form-radio h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
-                      checked={gender === "Female"}
-                      onChange={(e) => handleInputChange(e, setGender)}
-                      disabled={!isEditMode}
+                      type="text"
+                      className={`text-black font-open-sans ml-4 w-full rounded-lg border-0 ${
+                        isEditMode ? "text-gray-500" : ""
+                      }`}
+                      value={email}
+                      disabled
                     />
-                    <label htmlFor="female" className="ml-1 mr-3">
-                      Female
-                    </label>
+                  </div>
+                  <div className="mt-5 mb-2 font-open-sans flex items-center">
+                    <label className="w-36">Gender:</label>
+                    {isEditMode ? (
+                      <div
+                        className={`w-full rounded-lg flex ml-4 pl-5 py-2 ${
+                          isEditMode ? editCSS : ""
+                        }`}
+                      >
+                        <input
+                          type="checkbox"
+                          id="male"
+                          value="Male"
+                          className="form-radio h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
+                          checked={gender === "Male"}
+                          onChange={(e) => handleInputChange(e, setGender)}
+                          disabled={!isEditMode}
+                        />
+                        <label htmlFor="male" className="ml-1 mr-3">
+                          Male
+                        </label>
 
-                    <input
-                      type="radio"
-                      id="others"
-                      value="Others"
-                      className="form-radio h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
-                      checked={gender === "Others"}
-                      onChange={(e) => handleInputChange(e, setGender)}
-                      disabled={!isEditMode}
-                    />
-                    <label htmlFor="others" className="ml-1">
-                      Others
-                    </label>
+                        <input
+                          type="checkbox"
+                          id="female"
+                          value="Female"
+                          checked={gender === "Female"}
+                          className="form-radio h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
+                          onChange={(e) => handleInputChange(e, setGender)}
+                          disabled={!isEditMode}
+                        />
+                        <label htmlFor="female" className="ml-1 mr-3">
+                          Female
+                        </label>
+
+                        <input
+                          type="checkbox"
+                          id="others"
+                          value="Others"
+                          checked={gender === "Others"}
+                          className="form-radio h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
+                          onChange={(e) => handleInputChange(e, setGender)}
+                          disabled={!isEditMode}
+                        />
+                        <label htmlFor="others" className="ml-1">
+                          Others
+                        </label>
+                      </div>
+                    ) : (
+                      <p className="text-black font-open-sans ml-4 w-full rounded-lg border-0 bg-[#efefef4d]">
+                        {gender}
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>

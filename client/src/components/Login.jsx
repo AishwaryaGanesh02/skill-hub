@@ -29,6 +29,7 @@ export default function Login() {
           },
         }
       );
+
       const parseRes = await response.data;
       if (parseRes.token) {
         Cookies.set("token", parseRes.token, { expires: 1 });
@@ -44,6 +45,7 @@ export default function Login() {
         navigate("/");
       }
     } catch (err) {
+      console.log(err);
       console.error(err.message);
     }
   };
